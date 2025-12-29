@@ -4,43 +4,29 @@ import {
   HsafaProvider,
   type CustomToolUIRenderProps,
 } from '@hsafa/ui-sdk';
+import { Document, Page, pdfjs } from "react-pdf";
+import "react-pdf/dist/Page/AnnotationLayer.css";
+import "react-pdf/dist/Page/TextLayer.css";
+
+pdfjs.GlobalWorkerOptions.workerSrc = `//unpkg.com/pdfjs-dist@${pdfjs.version}/build/pdf.worker.min.js`;
 
 function ShowSourceUI({ output }: CustomToolUIRenderProps) {
   const result = output?.result;
-
   if (!result) return null;
 
   const fileId = result.file_id || result.fileId;
   const page = result.page ? Number(result.page) : 1;
 
+  const url = `/ksu_files/${fileId}.pdf`;
+
   return (
-    <div
-      style={{
-        width: '100%',
-        border: '1px solid rgba(255,255,255,0.12)',
-        borderRadius: 12,
-        padding: 12,
-        background: 'rgba(0,0,0,0.25)',
-      }}
-    >
+    <div style={{ width: "100%", border: "1px solid rgba(255,255,255,0.12)", borderRadius: 12, padding: 12, background: "rgba(0,0,0,0.25)" }}>
       {result.error ? (
-        <div style={{ color: '#f87171', fontSize: 13 }}>{result.error}</div>
+        <div style={{ color: "#f87171", fontSize: 13 }}>{result.error}</div>
       ) : (
-        <div style={{ display: 'grid', gap: 12 }}>
-          <div style={{ display: 'grid', gap: 8 }}>
-            <iframe
-              src={`/ksu_files/${fileId}.pdf#page=${page}`}
-              style={{
-                width: '100%',
-                height: '600px',
-                borderRadius: 10,
-                border: '1px solid rgba(255,255,255,0.10)',
-                background: 'rgba(255,255,255,0.03)',
-              }}
-              title={`PDF صفحة ${page}`}
-            />
-          </div>
-        </div>
+        <Document file={url}>
+          <Page pageNumber={page} width={900} />
+        </Document>
       )}
     </div>
   );
