@@ -11,8 +11,9 @@
   },
   "dependencies": {
     "@hsafa/ui-sdk": "^0.5.8",
+    "@iconify/react": "^6.0.2",
     "@tailwindcss/vite": "^4.1.18",
-    "pdfjs-dist": "^5.4.530",
+    "pdfjs-dist": "5.4.296",
     "react": "^19.2.0",
     "react-dom": "^19.2.0",
     "react-pdf": "^10.2.0",
